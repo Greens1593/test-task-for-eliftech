@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation'
 const Nav = () => {
     const path = usePathname();
   return (
-      <Nav className='w-full pb-4 pt-4 border-b-1 border-black'>
+      <nav className='w-full pb-4 pt-4 border-b-1 border-black'>
           <ul className='flex flex-row justify-start'>
               <li className={`pr-2 hover:text-blue-400  border-r-2 border-black ${path === '/' ? 'text-blue-700 font-bold' : 'text-blue-600'}`}>
                   <Link href='/' >Shop</Link>
@@ -15,7 +15,7 @@ const Nav = () => {
                   <Link href='/cart' >Shopping cart</Link>
               </li>
           </ul>
-    </Nav>
+    </nav>
   )
 }
 
