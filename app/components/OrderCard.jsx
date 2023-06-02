@@ -1,9 +1,9 @@
-import React from 'react'
-
-const OrderCard = () => {
+const OrderCard = ({ item }) => {
   return (
-    <div>OrderCard</div>
-  )
-}
+    <div className="p-4 flex flex-col gap-2 justify-center bg-slate-200">
+      <Image src={item.image} alt={item.name} className="object-contain" />
+    </div>
+  );
+};
 
-export default OrderCard
+export default OrderCard;
