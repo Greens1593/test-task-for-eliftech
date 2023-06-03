@@ -8,7 +8,7 @@ const Nav = () => {
   const cartItems = useSelector((state) => state.cart.items);
   const path = usePathname();
   return (
-    <nav className="w-full pb-4 pt-4 mb-4 bg-slate-100 sticky top-0 left-0 right-0">
+    <nav className="w-full pb-4 pt-4 mb-4 bg-slate-100 sticky z-10 opacity-80 top-0 left-0 right-0">
       <ul className="flex flex-row justify-start">
         <li
           className={`pl-4 pr-10 hover:text-blue-400  border-r-2 border-black ${

@@ -1,17 +1,19 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "@/data/cartSlice";
 
 const ItemCard = ({ item, shopName }) => {
   const items = useSelector((state) => state.cart.items);
+  let isAlredyInCart = items.filter((i) => i.id === item.id).length > 0;
   const dispatch = useDispatch();
   const handleCart = (item) => {
     dispatch(addItem({ ...item, shopName }));
+    isAlredyInCart = true;
   };
-  const isActive = items[0]?.shopName === shopName || items.length === 0;
-
+  const isActive =
+    (items[0]?.shopName === shopName || items.length === 0) && !isAlredyInCart;
   return (
     <div className="sm:w-full shadow-slate-700 shadow-sm rounded-md p-5 bg-slate-100 hover:bg-slate-300 flex flex-col justify-between">
       <div className="h-25 bg-gray-300 rounded-t-lg overflow-hidden">
@@ -33,7 +35,13 @@ const ItemCard = ({ item, shopName }) => {
           onClick={() => {
             isActive
               ? handleCart(item)
-              : alert("You can add items only from one shop");
+              : alert(
+                  `${
+                    isAlredyInCart
+                      ? "Item already in cart"
+                      : "You can add items only from one shop"
+                  }`
+                );
           }}
           className={`ml-auto ${
             isActive ? "bg-blue-500 hover:bg-blue-700" : "bg-blue-300"

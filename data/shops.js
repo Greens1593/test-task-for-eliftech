@@ -9,20 +9,20 @@ export const shops = [
         price: 10,
         image:
           "https://papa-joe.com.ua/wp-content/uploads/2020/09/IMG_5167.jpg",
-        id: 1,
+        id: 2,
       },
       {
         name: "Pizza",
         price: 20,
         image:
           "https://pizza.od.ua/upload/iblock/c38/c3892880079c75e426a603d95ba7d874.jpg",
-        id: 2,
+        id: 3,
       },
     ],
   },
   {
     name: "Shop 2",
-    id: 2,
+    id: 4,
     logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/2339px-McDonald%27s_Golden_Arches.svg.png",
     goods: [
       {
@@ -30,14 +30,14 @@ export const shops = [
         price: 12,
         image:
           "https://s7d1.scene7.com/is/image/mcdonalds/Sdwch_Cheeseburger:1-4-product-tile-desktop",
-        id: 1,
+        id: 5,
       },
       {
         name: "Coffee",
         price: 5,
         image:
           "https://s7d1.scene7.com/is/image/mcdonalds/DC_201906_7659_MediumIcedMocha_Glass_A1_832x472:1-4-product-tile-desktop",
-        id: 2,
+        id: 6,
       },
     ],
   },

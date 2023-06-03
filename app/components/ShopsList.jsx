@@ -23,7 +23,7 @@ const ShopsList = ({ setMenu, shopsArr, setShopName, shopName }) => {
               alt={shop.name}
               width={30}
               height={30}
-              className="rounded-full object-contain bg-slate-50 p-1"
+              className="rounded-full object-contain bg-slate-50 p-1 hidden sm:block"
             />
             {shop.name}
           </li>

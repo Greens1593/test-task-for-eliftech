@@ -7,33 +7,22 @@ export const cartSlice = createSlice({
   },
   reducers: {
     addItem: (state, action) => {
-      if (!action.payload.count) {
-        action.payload.count = 1;
-        state.items.push(action.payload);
-      } else {
-        state.items = state.items.map((item) =>
-          item.id === action.payload.id
-            ? { ...item, count: item.count + 1 }
-            : item
-        );
-      }
+      action.payload.count = 1;
+      state.items.push(action.payload);
     },
-    removeItem: (state, action) => {
-      if (action.payload.count > 1) {
-        state.items = state.items.map((item) =>
-          item.id === action.payload.id
-            ? { ...item, count: item.count - 1 }
-            : item
-        );
-      } else {
-        state.items = state.items.filter(
-          (item) => item.id !== action.payload.id
-        );
-      }
+    changeQuantity: (state, action) => {
+      state.items = state.items.map((item) =>
+        item.id === action.payload.id
+          ? { ...item, count: action.payload.count }
+          : item
+      );
+    },
+    removeAllItems: (state, action) => {
+      state.items = state.items.filter((item) => item.id !== action.payload.id);
     },
   },
 });
 
-export const { addItem, removeItem } = cartSlice.actions;
+export const { addItem, changeQuantity, removeAllItems } = cartSlice.actions;
 
 export default cartSlice.reducer;

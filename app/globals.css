@@ -28,3 +28,11 @@
 .app {
   @apply relative z-10 flex justify-center items-center flex-col max-w-7xl mx-auto sm:px-16 px-6;
 }
+
+.form_input {
+  @apply w-full font-normal flex rounded-lg mt-2 p-3 text-sm text-gray-500 outline-0 shadow-sm shadow-blue-700;
+}
+
+.form_label {
+  @apply text-sm font-medium text-gray-500;
+}
