@@ -122,7 +122,7 @@ const Form = () => {
         </label>
 
         <label className="form_label">
-          <span className="ml-2">Email</span>
+          <span className="ml-2">Address</span>
           <input
             className="form_input"
             type="text"
