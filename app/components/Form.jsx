@@ -1,20 +1,63 @@
 "use client";
 
+import { removeCart } from "@/data/cartSlice";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Form = () => {
   const state = useSelector((state) => state.cart.items);
+  const dispatch = useDispatch();
+  const router = useRouter();
   const [totalPrice, setTotalPrice] = useState(0);
   const [isSubmiting, setIsSubmiting] = useState(false);
+  const [deliveriInformation, setDeliveriInformation] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+  });
   useEffect(() => {
     setTotalPrice(
       state.reduce((acc, item) => acc + item.price * item.count, 0)
     );
   }, [state]);
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmiting(true);
+    const order = {
+      customerName: deliveriInformation.name,
+      customerEmail: deliveriInformation.email,
+      customerPhone: deliveriInformation.phone,
+      customerAddress: deliveriInformation.address,
+      storeName: state[0].shopName,
+      items: [
+        ...state.map((item) => ({
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          quantity: item.count,
+        })),
+      ],
+      totalPrice: totalPrice,
+      status: "pending",
+      createdAt: Date.now(),
+    };
+    try {
+      const res = await fetch("/api/order/new", {
+        method: "POST",
+        body: JSON.stringify(order),
+      });
+      if (res.ok) {
+        dispatch(removeCart());
+        router.push(`/`);
+        console.log(res);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsSubmiting(false);
+    }
   };
   return (
     <div>
@@ -33,6 +76,12 @@ const Form = () => {
             placeholder="Add your name"
             id="name"
             required
+            onChange={(e) =>
+              setDeliveriInformation({
+                ...deliveriInformation,
+                name: e.target.value,
+              })
+            }
           />
         </label>
 
@@ -44,6 +93,12 @@ const Form = () => {
             placeholder="email@example.com"
             id="email"
             required
+            onChange={(e) =>
+              setDeliveriInformation({
+                ...deliveriInformation,
+                email: e.target.value,
+              })
+            }
           />
         </label>
 
@@ -55,6 +110,12 @@ const Form = () => {
             placeholder="+ 38 (000) 000-00-00"
             id="phone"
             required
+            onChange={(e) =>
+              setDeliveriInformation({
+                ...deliveriInformation,
+                phone: e.target.value,
+              })
+            }
           />
         </label>
 
@@ -66,9 +127,15 @@ const Form = () => {
             placeholder="City, street, house number"
             id="address"
             required
+            onChange={(e) =>
+              setDeliveriInformation({
+                ...deliveriInformation,
+                address: e.target.value,
+              })
+            }
           />
         </label>
-        <p className="absolute bottom-4 right-[7rem] text-center text-lg font-bold">
+        <p className="absolute bottom-4 right-[10rem] text-center text-lg font-bold">
           Total price ${totalPrice}
         </p>
         <button

@@ -27,23 +27,25 @@ const OrderCard = ({ item }) => {
           <h2 className="text-center text-lg font-bold mb-2">{item.name}</h2>
           <h2 className="text-center text-lg font-bold">Price ${item.price}</h2>
         </div>
-        <form>
+        <div className="flex flex-col items-center justify-between">
           <input
             type="number"
-            className="mt-4 w-full text-center"
+            min={1}
+            max={999}
+            className="mt-4 mb-3 w-full text-center"
             value={quantity}
             onChange={(e) => setQuantity(e.target.value)}
           />
-        </form>
-        <button
-          type="button"
-          onClick={() => {
-            dispatch(removeAllItems(item));
-          }}
-          className={`absolute right-3 bottom-3 bg-red-500 hover:bg-red-700 text-white font-bold py-2 text-sm px-4 rounded-md`}
-        >
-          Remove
-        </button>
+          <button
+            type="button"
+            onClick={() => {
+              dispatch(removeAllItems(item));
+            }}
+            className={`w-[84px] bg-red-500 hover:bg-red-700 text-white font-bold py-2 text-sm px-4 rounded-md`}
+          >
+            Remove
+          </button>
+        </div>
       </div>
     </div>
   );

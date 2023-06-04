@@ -6,7 +6,7 @@ const connectToDb = async () => {
   if (!isConnected) {
     try {
       await mongoose.connect(process.env.MONGODB_URI, {
-        dbName: "elfitech-task",
+        dbName: "eliftech-shop",
         useNewUrlParser: true,
         useUnifiedTopology: true,
       });

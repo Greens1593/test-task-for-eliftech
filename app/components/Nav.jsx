@@ -18,17 +18,26 @@ const Nav = () => {
           <Link href="/">Shop</Link>
         </li>
         <li
-          className={`pr-4 pl-10 hover:text-blue-400 ${
-            path === "/" ? "text-blue-600" : "text-blue-700 font-bold"
+          className={`pr-4 pl-10 relative hover:text-blue-400 border-r-2 border-black ${
+            path === "/cart" ? "text-blue-700 font-bold" : "text-blue-600"
           }`}
         >
-          <Link href="/cart" className="relative">
+          <Link href="/cart">
             Shopping cart
             {cartItems.length > 0 && (
-              <span className="ml-1 absolute top-0 right--1 text-xs font-bold text-red-500">
+              <span className="absolute top-0 right-1 text-xs font-bold text-red-500">
                 {cartItems.length}
               </span>
             )}
+          </Link>
+        </li>
+        <li
+          className={`pr-4 pl-10 hover:text-blue-400 ${
+            path === "/orders" ? "text-blue-700 font-bold" : "text-blue-600"
+          }`}
+        >
+          <Link href="/orders" className="relative">
+            Orders
           </Link>
         </li>
       </ul>
