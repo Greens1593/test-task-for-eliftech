@@ -11,7 +11,8 @@ export default function Home() {
 
   useEffect(() => {
     setShopsArr(shops);
-  });
+  }, []); // Specify an empty dependency array to ensure useEffect runs only once
+
   return (
     <section className="w-full flex flex-row justify-start gap-6">
       <div className="w-1/3 rounded-md p-5 shadow-slate-700 shadow-sm">

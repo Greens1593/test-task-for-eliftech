@@ -1,19 +1,24 @@
-"use client";
-import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "@/data/cartSlice";
 
 const ItemCard = ({ item, shopName }) => {
   const items = useSelector((state) => state.cart.items);
-  let isAlredyInCart = items.filter((i) => i.id === item.id).length > 0;
+
+  // Check if the item is already in the cart
+  let isAlreadyInCart = items.some((i) => i.id === item.id);
+
   const dispatch = useDispatch();
+
   const handleCart = (item) => {
     dispatch(addItem({ ...item, shopName }));
-    isAlredyInCart = true;
+    isAlreadyInCart = true;
   };
+
+  // Determine if the item card is active or not
   const isActive =
-    (items[0]?.shopName === shopName || items.length === 0) && !isAlredyInCart;
+    (items[0]?.shopName === shopName || items.length === 0) && !isAlreadyInCart;
+
   return (
     <div className="sm:w-full shadow-slate-700 shadow-sm rounded-md p-5 bg-slate-100 hover:bg-slate-300 flex flex-col justify-between">
       <div className="h-25 bg-gray-300 rounded-t-lg overflow-hidden">
@@ -37,7 +42,7 @@ const ItemCard = ({ item, shopName }) => {
               ? handleCart(item)
               : alert(
                   `${
-                    isAlredyInCart
+                    isAlreadyInCart
                       ? "Item already in cart"
                       : "You can add items only from one shop"
                   }`
@@ -45,7 +50,7 @@ const ItemCard = ({ item, shopName }) => {
           }}
           className={`ml-auto ${
             isActive ? "bg-blue-500 hover:bg-blue-700" : "bg-blue-300"
-          }  text-white font-bold py-2 text-sm px-4 rounded-md`}
+          } text-white font-bold py-2 text-sm px-4 rounded-md`}
         >
           Add to cart
         </button>

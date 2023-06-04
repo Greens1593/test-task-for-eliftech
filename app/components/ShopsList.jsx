@@ -1,5 +1,7 @@
 "use client";
 import Image from "next/image";
+
+// Component for rendering a list of shops
 const ShopsList = ({ setMenu, shopsArr, setShopName, shopName }) => {
   return (
     <div className="flex flex-col w-full h-full gap-3 justify-start ">
@@ -13,6 +15,7 @@ const ShopsList = ({ setMenu, shopsArr, setShopName, shopName }) => {
               setMenu(shop.goods);
             }}
             className={`flex justify-center gap-5 text-lg ${
+              // Apply different styles based on whether the shop is selected or not
               shop.name === shopName
                 ? "font-bold bg-slate-500 hover:bg-blue-300"
                 : "font-normal bg-slate-400 hover:bg-blue-200"

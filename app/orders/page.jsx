@@ -9,17 +9,27 @@ const Orders = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       setFetching(true);
-      const res = await fetch("/api/order");
-      const data = await res.json();
-      setOrders(data);
-      setFetching(false);
+      try {
+        const res = await fetch("/api/order");
+        const data = await res.json();
+        setOrders(data);
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+      } finally {
+        setFetching(false);
+      }
     };
     fetchOrders();
   }, []);
-  if (fetching)
+
+  if (fetching) {
     return <h1 className="text-center text-3xl font-bold">Loading...</h1>;
-  if (orders.length === 0)
+  }
+
+  if (orders.length === 0) {
     return <h1 className="text-center text-3xl font-bold">No orders yet</h1>;
+  }
+
   return (
     <div className="container mx-auto p-4">
       <div className="overflow-x-auto">
@@ -56,7 +66,15 @@ const Orders = () => {
                   </ul>
                 </td>
                 <td className="px-4 py-2 border-b">{order.totalPrice}</td>
-                <td className="px-4 py-2 border-b">{order.status}</td>
+                <td
+                  className={`${
+                    order.status === "pending"
+                      ? "text-red-500"
+                      : "text-green-500"
+                  } px-4 py-2 border-b`}
+                >
+                  {order.status}
+                </td>
                 <td className="px-4 py-2 border-b">
                   {formatDate(order.createdAt)}
                 </td>

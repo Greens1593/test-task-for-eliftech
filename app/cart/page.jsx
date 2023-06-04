@@ -4,8 +4,9 @@ import { useSelector } from "react-redux";
 import Form from "../components/Form";
 import OrderCard from "../components/OrderCard";
 
-const page = () => {
-  const cartItems = useSelector((state) => state.cart.items);
+const Page = () => {
+  const cartItems = useSelector((state) => state.cart.items); // Get the items from the cart state
+
   return (
     <section className="w-full flex flex-col md:flex-row justify-start gap-6 relative pb-[70px]">
       <div className="w-full md:w-1/3 rounded-md p-5 shadow-slate-700 shadow-sm">
@@ -22,4 +23,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

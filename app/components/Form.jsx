@@ -6,57 +6,59 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const Form = () => {
-  const state = useSelector((state) => state.cart.items);
+  const state = useSelector((state) => state.cart.items); // Get the items from the cart state
   const dispatch = useDispatch();
   const router = useRouter();
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [isSubmiting, setIsSubmiting] = useState(false);
-  const [deliveriInformation, setDeliveriInformation] = useState({
+  const [totalPrice, setTotalPrice] = useState(0); // Calculate the total price of the items
+  const [isSubmitting, setIsSubmitting] = useState(false); // Track the form submission status
+  const [deliveryInformation, setDeliveryInformation] = useState({
     name: "",
     email: "",
     phone: "",
     address: "",
-  });
+  }); // Store the delivery information
+
   useEffect(() => {
     setTotalPrice(
       state.reduce((acc, item) => acc + item.price * item.count, 0)
-    );
+    ); // Recalculate the total price whenever the state changes
   }, [state]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmiting(true);
+    setIsSubmitting(true);
+
     const order = {
-      customerName: deliveriInformation.name,
-      customerEmail: deliveriInformation.email,
-      customerPhone: deliveriInformation.phone,
-      customerAddress: deliveriInformation.address,
+      customerName: deliveryInformation.name,
+      customerEmail: deliveryInformation.email,
+      customerPhone: deliveryInformation.phone,
+      customerAddress: deliveryInformation.address,
       storeName: state[0].shopName,
-      items: [
-        ...state.map((item) => ({
-          id: item.id,
-          name: item.name,
-          price: item.price,
-          quantity: item.count,
-        })),
-      ],
+      items: state.map((item) => ({
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        quantity: item.count,
+      })),
       totalPrice: totalPrice,
       status: "pending",
       createdAt: Date.now(),
     };
+
     try {
       const res = await fetch("/api/order/new", {
         method: "POST",
         body: JSON.stringify(order),
       });
+
       if (res.ok) {
-        dispatch(removeCart());
+        dispatch(removeCart()); // Clear the cart after successful submission
         router.push(`/`);
-        console.log(res);
       }
     } catch (error) {
       console.log(error);
     } finally {
-      setIsSubmiting(false);
+      setIsSubmitting(false);
     }
   };
   return (
@@ -77,8 +79,8 @@ const Form = () => {
             id="name"
             required
             onChange={(e) =>
-              setDeliveriInformation({
-                ...deliveriInformation,
+              setDeliveryInformation({
+                ...deliveryInformation,
                 name: e.target.value,
               })
             }
@@ -94,8 +96,8 @@ const Form = () => {
             id="email"
             required
             onChange={(e) =>
-              setDeliveriInformation({
-                ...deliveriInformation,
+              setDeliveryInformation({
+                ...deliveryInformation,
                 email: e.target.value,
               })
             }
@@ -111,8 +113,8 @@ const Form = () => {
             id="phone"
             required
             onChange={(e) =>
-              setDeliveriInformation({
-                ...deliveriInformation,
+              setDeliveryInformation({
+                ...deliveryInformation,
                 phone: e.target.value,
               })
             }
@@ -128,8 +130,8 @@ const Form = () => {
             id="address"
             required
             onChange={(e) =>
-              setDeliveriInformation({
-                ...deliveriInformation,
+              setDeliveryInformation({
+                ...deliveryInformation,
                 address: e.target.value,
               })
             }
@@ -142,7 +144,7 @@ const Form = () => {
           type="submit"
           className="absolute right-3 bottom-3 bg-green-500 hover:bg-green-700 text-white font-bold py-2 text-sm px-4 rounded-md"
         >
-          {isSubmiting ? "Submitting..." : "Submit"}
+          {isSubmitting ? "Submitting..." : "Submit"}
         </button>
       </form>
     </div>
